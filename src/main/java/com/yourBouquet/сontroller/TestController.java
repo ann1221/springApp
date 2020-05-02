@@ -1,6 +1,6 @@
 package com.yourBouquet.сontroller;
 
-import com.yourBouquet.dao.*;
+import com.yourBouquet.repository.*;
 import com.yourBouquet.entity.*;
 import com.yourBouquet.service.CatalogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,21 +80,20 @@ public class TestController {
         return dealerRepo.findAll();
     }
 
-    @GetMapping(path = "/clients/add")
-    public @ResponseBody
-    Client addClient(){
-        Client client = new Client();
-        client.setFname("Rf");
-        client.setSname("CD");
-
-        client.setPhone(900088L);
-        client.setAddress("adfasdfasdf");
-        client.setEmail("adfasdfasdf");
-        List<Client> clients =  clientRepo.getByFnameAndSnameAndLnameAndPhoneAndAddressAndEmail(client.getFname(),
-                client.getSname(),client.getLname(), client.getPhone(), client.getAddress(), client.getEmail());
-        if (clients.size()>0) return null;
-        return clientRepo.save(client);
-    }
+//    @GetMapping(path = "/clients/add")
+//    public @ResponseBody
+//    Client addClient(){
+//        Client client = new Client();
+//        client.setFname("Rf");
+//        client.setSname("CD");
+//
+//        client.setPhone(900088L);
+//        client.setAddress("adfasdfasdf");
+//        client.setEmail("adfasdfasdf");
+//         clients =  clientRepo.getByPhone(client.getPhone());
+//        if (clients.size()>0) return null;
+//        return clientRepo.save(client);
+//    }
 
     @GetMapping(path = "/bouquets/{bouquetId}")
     public @ResponseBody List<ProdInBouq> getProdsInBouq(@PathVariable Integer bouquetId){

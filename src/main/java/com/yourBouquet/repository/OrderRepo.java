@@ -1,4 +1,4 @@
-package com.yourBouquet.dao;
+package com.yourBouquet.repository;
 
 import com.yourBouquet.entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;

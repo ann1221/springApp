@@ -1,4 +1,4 @@
-package com.yourBouquet.dao;
+package com.yourBouquet.repository;
 
 import com.yourBouquet.entity.Bouquet;
 
@@ -39,10 +39,10 @@ public interface BouquetRepo extends JpaRepository<Bouquet, Integer> {
     Bouquet getByBouquetId(Integer id);
 
     @Query(value =
-            "select coalesce(min(in_stock/amount),0) from " +
+            "select coalesce((min(coalesce(in_stock,0)/(coalesce(amount,0)))),0)  from " +
                 "( select * from ann1221.product_in_bouquet pib " +
                 "where pib.bouquet_id = ?1 " +
-            ") prodInBouquet, ( " +
+            ") prodInBouquet left join ( " +
                  "select t1.prod_id, t1.purch_summ - coalesce(t2.order_summ, 0) as in_stock " +
                  "from ( " +
                     "select prod_id,  coalesce(sum(amount),0) purch_summ " +
@@ -57,7 +57,7 @@ public interface BouquetRepo extends JpaRepository<Bouquet, Integer> {
                     "group by p.prod_id) t2 " +
                  "on t1.prod_id = t2.prod_id " +
             ") prodInStok " +
-            "where prodInStok.prod_id = prodInBouquet.prod_id",
+            "on prodInStok.prod_id = prodInBouquet.prod_id",
             nativeQuery = true)
     Integer getAmountAvailableNative(Integer bouquetId);
 

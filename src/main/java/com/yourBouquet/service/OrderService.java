@@ -1,15 +1,12 @@
 package com.yourBouquet.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionLikeType;
 import com.fasterxml.jackson.databind.type.MapType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import com.yourBouquet.dao.BouqInOrdRepo;
-import com.yourBouquet.dao.ClientRepo;
-import com.yourBouquet.dao.OrderRepo;
+import com.yourBouquet.repository.BouqInOrdRepo;
+import com.yourBouquet.repository.ClientRepo;
+import com.yourBouquet.repository.OrderRepo;
 import com.yourBouquet.entity.*;
 import com.yourBouquet.entity.compositePk.BouqInOrdPk;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class OrderService {
@@ -31,21 +26,18 @@ public class OrderService {
     BouqInOrdRepo bouqInOrdRepo;
 
     public Boolean addOrder(Client client, String bouquetList){
-        List<Client> sameClients =
-                clientRepo.getByFnameAndSnameAndLnameAndPhoneAndAddressAndEmail(
-                        client.getFname(), client.getSname(), client.getLname(),
-                        client.getPhone(), client.getAddress(), client.getEmail());
-
-        Client newClient;
-        if (sameClients.size() > 0) newClient = sameClients.get(0);
-        else newClient = clientRepo.save(client);
+        Client sameClient = clientRepo.getByPhone(client.getPhone());
+        //Client newClient;
+        if (sameClient != null ) client.setClientId(sameClient.getClientId());
+        client.setRoles(Collections.singleton(new Role(3, "ROLE_GUEST")));
+        client = clientRepo.save(client);
 
         java.util.Date utilDate = new java.util.Date();
         Date date = new Date(utilDate.getTime());
 
         Order order = new Order();
         order.setDate(date);
-        order.setClient(newClient);
+        order.setClient(client);
         Operator dummyOperator = new Operator();
         dummyOperator.setOperatorId(1);
         order.setOperator(dummyOperator);
