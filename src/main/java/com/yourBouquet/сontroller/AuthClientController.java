@@ -20,10 +20,10 @@ public class AuthClientController {
     @Autowired
     ClientAuthService clientAuthService;
 
-    @GetMapping(value = "/info")
+    @GetMapping(value = "/validate")
     public ResponseEntity<String> getUserInfo(){
         String result = clientAuthService.getAuthClient();
-        return result != null && result.length()>0 ? new ResponseEntity<String>(result, HttpStatus.OK)
-                : new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        return result != null && result.length()>0 ? new ResponseEntity<>(result, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

@@ -71,10 +71,10 @@ public class Client implements Serializable , UserDetails {
     public String toString()
     {
         return "{" +
-                ", \"fname\" : \"" + fname + '\"' +
+                " \"fname\" : \"" + fname + '\"' +
                 ", \"sname\" : \"" + sname + '\"' +
                 ", \"lname\" : \"" + lname + '\"' +
-                ", phone\" : " + phone +
+                ", \"phone\" : " + phone +
                 ", \"address\" : \"" + address + '\"' +
                 ", \"email\" : \"" + email + '\"' +
                 '}';
