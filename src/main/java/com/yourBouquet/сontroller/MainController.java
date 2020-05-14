@@ -1,6 +1,7 @@
 package com.yourBouquet.сontroller;
 
 import com.yourBouquet.entity.Client;
+import com.yourBouquet.entity.Comment;
 import com.yourBouquet.entity.Subscriber;
 import com.yourBouquet.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Date;
 
 @RestController
 @CrossOrigin(origins = {"http://localhost:4200", "http://localhost:4201"})
@@ -78,10 +77,10 @@ public class MainController {
     @Autowired
     public JavaMailSender emailSender;
 
-    @GetMapping(value = "/sendSimpleEmailParam",  params = {"email"})
-    //localhost:8080/main/sendSimpleEmailParam?email=miss.sokolova-marya2014@yandex.ru
-    public String sendSimpleEmailParam(@RequestParam String email) {
-        String answer = "Email Sent!";
+    @PostMapping(value = "/subscribers/add",
+            produces = "application/json",
+            params = {"email"})
+    public ResponseEntity<String> sendSimpleEmail(@RequestParam String email) {
         // Create a Simple MailMessage.
         SimpleMailMessage message = new SimpleMailMessage();
 
@@ -91,17 +90,14 @@ public class MainController {
 
         // Send Message!
         this.emailSender.send(message);
-        subscriberService.addSubscriber(email);
-        return answer;
+        return subscriberService.addSubscriber(email) != null ? new ResponseEntity<>(HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.CONFLICT);
     }
 
-
-
-    @GetMapping(value = "/comment",  params = {"fname", "sname", "commentText"})
-    //localhost:8080/main/sendSimpleEmailParam?email=miss.sokolova-marya2014@yandex.ru
-    public String Comment(@RequestParam String fname, @RequestParam String sname, @RequestParam String commentText) {
-        String answer = "Comment sucsess!";
-        commentService.addComment(fname, sname, commentText);
-        return answer;
+    @PostMapping(value = "/comments/add", produces = "application/json")
+    public ResponseEntity<String> addComment(@RequestBody Comment comment) {
+        System.out.println("InAddComment");
+        return commentService.addComment(comment) != null ?  new ResponseEntity<>(HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

@@ -10,9 +10,7 @@ import java.util.List;
 
 @Repository
 public interface CommentRepo extends JpaRepository<Comment, Integer> {
-
     List<Comment> findAll();
-    Comment getByCommentId(Integer commentId);
 
     Comment save(Comment comment);
     @Transactional

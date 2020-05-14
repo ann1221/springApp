@@ -16,12 +16,8 @@ public class SubscriberService {
         Subscriber subscriber = new Subscriber();
         subscriber.setEmail(email);
 
-
         Subscriber sameSubscriber = subscriberRepo.getByEmail(subscriber.getEmail());
-
-        if (sameSubscriber != null) subscriber = sameSubscriber;
-        else subscriber = subscriberRepo.save(subscriber);
-
-        return subscriber;
+        if (sameSubscriber != null) return null;
+        return subscriberRepo.save(subscriber);
     }
 }

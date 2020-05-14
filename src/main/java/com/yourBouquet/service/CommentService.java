@@ -14,20 +14,11 @@ public class CommentService {
     @Autowired
     CommentRepo commentRepo;
 
-    public Comment addComment(String fname, String lname, String text){
+    public Comment addComment(Comment comment){
         Date date = new Date();
 
-        Comment comment = new Comment();
-        comment.setFname(fname);
-        comment.setSname(lname);
-        comment.setText(text);
         comment.setDate(date);
 
-        Comment sameComment = commentRepo.getByCommentId(comment.getCommentId());
-
-        if (sameComment != null) comment = sameComment;
-        else comment = commentRepo.save(comment);
-
-        return comment;
+        return commentRepo.save(comment);
     }
 }

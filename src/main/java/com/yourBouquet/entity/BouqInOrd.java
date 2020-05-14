@@ -2,6 +2,7 @@ package com.yourBouquet.entity;
 
 import com.yourBouquet.entity.compositePk.BouqInOrdPk;
 import lombok.*;
+import org.springframework.context.annotation.Scope;
 
 import javax.persistence.*;
 import java.io.Serializable;
