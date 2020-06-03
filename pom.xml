@@ -12,6 +12,8 @@
 	<artifactId>demo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>demo</name>
+<!--	<packaging>war</packaging>-->
+
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
@@ -22,7 +24,17 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+<!--			<exclusions>-->
+<!--				<exclusion>-->
+<!--					<groupId>org.springframework.boot</groupId>-->
+<!--					<artifactId>spring-boot-starter-tomcat</artifactId>-->
+<!--				</exclusion>-->
+<!--			</exclusions>-->
 		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-jetty</artifactId>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -32,17 +44,17 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.junit.vintage</groupId>
-					<artifactId>junit-vintage-engine</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-test</artifactId>-->
+<!--			<scope>test</scope>-->
+<!--			<exclusions>-->
+<!--				<exclusion>-->
+<!--					<groupId>org.junit.vintage</groupId>-->
+<!--					<artifactId>junit-vintage-engine</artifactId>-->
+<!--				</exclusion>-->
+<!--			</exclusions>-->
+<!--		</dependency>-->
 
 		<dependency>
 			<groupId>org.postgresql</groupId>
@@ -71,6 +83,15 @@
 			<version>2.10.3</version>
 		</dependency>
 
+		<!-- нужно для работы not embedded серверов-->
+<!--		<dependency>-->
+<!--			<groupId>javax.servlet</groupId>-->
+<!--			<artifactId>javax.servlet-api</artifactId>-->
+<!--			<version>4.0.1</version>-->
+<!--			<scope>provided</scope>-->
+<!--		</dependency>-->
+
+
 	</dependencies>
 
 	<build>
@@ -79,6 +100,24 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<!--plugin for wildfly-->
+<!--			<plugin>-->
+<!--				<groupId>org.wildfly.plugins</groupId>-->
+<!--				<artifactId>wildfly-maven-plugin</artifactId>-->
+<!--				<version>1.2.1.Final</version>-->
+<!--			</plugin>-->
+<!--			plugin for jetty-->
+<!--			<plugin>-->
+<!--				<groupId>org.eclipse.jetty</groupId>-->
+<!--				<artifactId>jetty-maven-plugin</artifactId>-->
+<!--				<version>9.4.10.v20180503</version>-->
+<!--				<configuration>-->
+<!--					<webApp>-->
+<!--						<contextPath>/</contextPath>-->
+<!--					</webApp>-->
+<!--				</configuration>-->
+<!--			</plugin>-->
+
 		</plugins>
 	</build>
 

@@ -2,14 +2,11 @@ package com.yourBouquet.сontroller;
 
 import com.yourBouquet.entity.Client;
 import com.yourBouquet.entity.Comment;
-import com.yourBouquet.entity.Subscriber;
 import com.yourBouquet.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -28,7 +25,8 @@ public class MainController {
     CommentService commentService;
 
     @PostMapping(value = "/orders/new", produces = "application/json")
-    public ResponseEntity<String> addClientOrder(@RequestBody Client client, @RequestParam String bouquetList){
+    public ResponseEntity<String> addClientOrder(@RequestBody Client client,
+                                                 @RequestParam String bouquetList){
         Boolean result = orderService.addOrder(client, bouquetList);
         return  result? new ResponseEntity<>(HttpStatus.CREATED)
                 : new ResponseEntity<>(HttpStatus.CONFLICT);
@@ -74,29 +72,16 @@ public class MainController {
                 : new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
     }
 
-    @Autowired
-    public JavaMailSender emailSender;
-
     @PostMapping(value = "/subscribers/add",
             produces = "application/json",
             params = {"email"})
     public ResponseEntity<String> sendSimpleEmail(@RequestParam String email) {
-        // Create a Simple MailMessage.
-        SimpleMailMessage message = new SimpleMailMessage();
-
-        message.setTo(email);
-        message.setSubject("Test Simple Email");
-        message.setText("Hello! You've just subscribed us! Thank you! Hope you'll enjoy our messages :) ");
-
-        // Send Message!
-        this.emailSender.send(message);
         return subscriberService.addSubscriber(email) != null ? new ResponseEntity<>(HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.CONFLICT);
     }
 
     @PostMapping(value = "/comments/add", produces = "application/json")
     public ResponseEntity<String> addComment(@RequestBody Comment comment) {
-        System.out.println("InAddComment");
         return commentService.addComment(comment) != null ?  new ResponseEntity<>(HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }

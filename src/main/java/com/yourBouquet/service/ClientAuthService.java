@@ -3,7 +3,7 @@ package com.yourBouquet.service;
 import com.yourBouquet.repository.ClientRepo;
 import com.yourBouquet.entity.Client;
 import com.yourBouquet.entity.Role;
-import netscape.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

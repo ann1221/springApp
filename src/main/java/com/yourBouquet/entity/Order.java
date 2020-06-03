@@ -6,24 +6,42 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-@Entity
-@Table(name = "CLIENT_ORDER")
-@NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode
-public class Order implements Serializable {
-    @Id
-    @SequenceGenerator(name = "clientOrderOrderIdSeq", sequenceName = "client_order_order_id_seq", allocationSize = 1, initialValue = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "clientOrderOrderIdSeq")
-    @Column(name = "order_id", nullable = false)
-    @Getter
-    @Setter
-    private Integer orderId;
 
-    @Column(name = "order_date", nullable = false)
-    @Getter
-    @Setter
-    private Date date;
+
+
+
+
+
+                    @Entity
+                    @Table(name = "CLIENT_ORDER")
+                    @NoArgsConstructor
+                    @AllArgsConstructor
+                    @EqualsAndHashCode
+                    public class Order implements Serializable {
+                        @Id
+                        @SequenceGenerator(name = "clientOrderOrderIdSeq",
+                                sequenceName = "client_order_order_id_seq",
+                                allocationSize = 1, initialValue = 1)
+                        @GeneratedValue(strategy = GenerationType.SEQUENCE,
+                                generator = "clientOrderOrderIdSeq")
+                        @Column(name = "order_id", nullable = false)
+                        @Getter
+                        @Setter
+                        private Integer orderId;
+
+                        @Column(name = "order_date", nullable = false)
+                        @Getter
+                        @Setter
+                        private Date date;
+
+                        //...
+
+
+
+
+
+
+
 
     @ManyToOne
     @JoinColumn(name = "client_id")
